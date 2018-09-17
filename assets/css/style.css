@@ -3,6 +3,10 @@ body {
     background: url("../images/cloudy-day.png");
 }
 
+#timeNumber {
+
+}
+
 .container {
     height: 330px;
     width: 1000px;
@@ -10,7 +14,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
-    background:gray;
+    background:rgb(168, 168, 168);
     padding: 20px;
     border:1 px solid #08038c;
     box-shadow: 0 0 8px 3px #fff;

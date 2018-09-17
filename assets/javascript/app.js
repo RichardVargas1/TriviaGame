@@ -1,3 +1,4 @@
+// One object holding in my questions for my trivia game.
 var questions = [{
     "question": "Which of the following football teams were given the \"America's Team\" nickname?",
     "choice1": "Houston Texans",
@@ -33,12 +34,27 @@ var questions = [{
     "choice3": "Krispy Kreme",
     "choice4": "Kolache Factory",
     "answer": "4"
+},  {
+    "question": "What year did mankind land on the moon?",
+    "choice1": "1902",
+    "choice2": "1969",
+    "choice3": "1777",
+    "choice4": "2003",
+    "answer": "2"
+},   {
+    "question": "What color is not on the rainbow?",
+    "choice1": "Red",
+    "choice2": "Orange",
+    "choice3": "Yellow",
+    "choice4": "Black",
+    "answer": "4"
 }]
 
 var currentQuestion = 0;
 var score = 0;
 var totalQuestions = questions.length;
 
+// variables wil be used to capture HTML IDs.
 var container = document.getElementById('quizContainer');
 var questionEl = document.getElementById('question');
 var choice1 = document.getElementById('choice1');
@@ -81,4 +97,37 @@ function loadNextQuestion () {
     loadQuestion(currentQuestion);
 }
 
-loadQuestion(currentQuestion);
+loadQuestion(currentQuestion);''
+
+// I tried to go off from the "interval assignment," for my timer. 
+// But I could not figure out how to end my game and take the user to be shown their final score.
+var timer = 210;
+var intervalId;
+
+function run() {
+    clearInterval(intervalId);
+    intervalId = setInterval(decrement, 1000);
+}
+
+function decrement() {
+    
+    timer--;
+
+    $("#timeNumber").html("<h2> " + timer + "</h2>");
+
+    if (timer === 0) {
+
+    stop();
+
+
+    alert("Time Up!");
+    }
+}
+
+function stop() {
+
+    clearInterval(intervalId);
+}
+
+
+run();

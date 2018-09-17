@@ -5,9 +5,14 @@
     <meta charset="utf-8" />
     <title>TriviaGame</title>
     <link href="assets/css/style.css" rel="stylesheet" type="text/css">
+    <!-- I chose to be creative with my CSS more, instead of using Bootstrap. But, that may have taken up more of my timer than actually working with my quiz a little more. -->
 </head>
 
 <body>
+    <div id="timeNumber"></div>
+
+    <br>
+    <!-- My Container holding the questions and choices for my quiz. -->
     <div id="quizContainer" class="container">
         <div class="title">RV-TriviaGame</div>
         <div id="question" class="question"></div>
@@ -18,6 +23,9 @@
         <button id="nextButton" class="next-btn" onclick="loadNextQuestion();">Next Question</button>
     </div>
     <div id="result" class="container result" style="display:none;"></div>
+
+    <!-- jQuery Reference -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <!-- My JavaScript File Reference -->
     <script type="text/javascript" src="assets/javascript/app.js"></script>
