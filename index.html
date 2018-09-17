@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="utf-8" />
+    <title>TriviaGame</title>
+    <link href="assets/css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div id="quizContainer" class="container">
+        <div class="title">RV-TriviaGame</div>
+        <div id="question" class="question"></div>
+        <label class="choice"><input type="radio" name="choice" value="1" /> <span id="choice1"></span></label>
+        <label class="choice"><input type="radio" name="choice" value="2" /> <span id="choice2"></span></label>
+        <label class="choice"><input type="radio" name="choice" value="3" /> <span id="choice3"></span></label>
+        <label class="choice"><input type="radio" name="choice" value="4" /> <span id="choice4"></span></label>
+        <button id="nextButton" class="next-btn" onclick="loadNextQuestion();">Next Question</button>
+    </div>
+    <div id="result" class="container result" style="display:none;"></div>
+
+    <!-- My JavaScript File Reference -->
+    <script type="text/javascript" src="assets/javascript/app.js"></script>
+</body>
+
+</html>

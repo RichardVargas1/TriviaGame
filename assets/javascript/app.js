@@ -1,0 +1,84 @@
+var questions = [{
+    "question": "Which of the following football teams were given the \"America's Team\" nickname?",
+    "choice1": "Houston Texans",
+    "choice2": "Baltimore Ravens",
+    "choice3": "New York Jets",
+    "choice4": "Dallas Cowboys",
+    "answer": "4"
+},  {
+    "question": "Who was the first actor to portray James Bond \"on screen\"?",
+    "choice1": "Daniel Craig",
+    "choice2": "Timothy Dalton",
+    "choice3": "Sean Connery",
+    "choice4": "Barry Nelson",
+    "answer": "4"
+},  {
+    "question": "What was Elvis Presley's natural hair color?",
+    "choice1": "Blonde",
+    "choice2": "Brown",
+    "choice3": "Black",
+    "choice4": "Red",
+    "answer": "1"
+},  {
+    "question": "How many valves does a trumpet have?",
+    "choice1": "3",
+    "choice2": "4",
+    "choice3": "5",
+    "choice4": "2",
+    "answer": "1"
+},  {
+    "question": "Which of the following restaurants do not sell donuts?",
+    "choice1": "Dunkin' Donuts",
+    "choice2": "Shipley Do-Nuts",
+    "choice3": "Krispy Kreme",
+    "choice4": "Kolache Factory",
+    "answer": "4"
+}]
+
+var currentQuestion = 0;
+var score = 0;
+var totalQuestions = questions.length;
+
+var container = document.getElementById('quizContainer');
+var questionEl = document.getElementById('question');
+var choice1 = document.getElementById('choice1');
+var choice2 = document.getElementById('choice2');
+var choice3 = document.getElementById('choice3');
+var choice4 = document.getElementById('choice4');
+var nextButton = document.getElementById('nextButton');
+var resultCont = document.getElementById('result');
+
+function loadQuestion (questionIndex) {
+    var q = questions[questionIndex];
+    questionEl.textContent = (questionIndex + 1) + '. ' + q.question;
+    choice1.textContent = q.choice1;
+    choice2.textContent = q.choice2;
+    choice3.textContent = q.choice3;
+    choice4.textContent = q.choice4;
+};
+
+function loadNextQuestion () {
+    var selectedChoice = document.querySelector('input[type=radio]:checked');
+    if(!selectedChoice){
+        alert('please select your answer!');
+        return;
+    }
+    var answer = selectedChoice.value;
+    if(questions[currentQuestion].answer === answer) {
+        score += 1;
+    }
+    selectedChoice.checked = false;
+    currentQuestion++;
+    if(currentQuestion === totalQuestions - 1) {
+        nextButton.textCurrent = 'Finish';
+    }
+    if(currentQuestion === totalQuestions) {
+        container.style.display = 'none';
+        resultCont.style.display = '';
+        resultCont.textContent = 'Final Score: ' + score;
+        return;
+    }
+    loadQuestion(currentQuestion);
+}
+
+loadQuestion(currentQuestion);
