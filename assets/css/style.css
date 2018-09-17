@@ -3,8 +3,25 @@ body {
     background: url("../images/cloudy-day.png");
 }
 
-#timeNumber {
+.footerContainer {
+    height: 30px;
+    width: 100%;
+    bottom: 0;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+    background: black;
+    position: absolute;
+    font-weight: bold
+}
 
+#timeNumber {
+    text-align: center;
+    padding: 5px;
+    font-size: 22px;
+    background: black;
+    margin: 10px;
+    color: orange;
 }
 
 .container {
@@ -26,7 +43,7 @@ body {
     font-weight: bold;
     font-size: 36px;
     text-transform: uppercase;
-    color: blue;
+    color: black;
 }
 
 .question {

@@ -50,11 +50,12 @@ var questions = [{
     "answer": "4"
 }]
 
+// Variables for questions and score keeping.
 var currentQuestion = 0;
 var score = 0;
 var totalQuestions = questions.length;
 
-// variables wil be used to capture HTML IDs.
+// variables will be used to capture HTML IDs.
 var container = document.getElementById('quizContainer');
 var questionEl = document.getElementById('question');
 var choice1 = document.getElementById('choice1');
@@ -81,10 +82,12 @@ function loadNextQuestion () {
     }
     var answer = selectedChoice.value;
     if(questions[currentQuestion].answer === answer) {
+        // Adds one point if the user gets a question right.
         score += 1;
     }
     selectedChoice.checked = false;
     currentQuestion++;
+    // Subtracts one point from the final score if the user gets a question wrong.
     if(currentQuestion === totalQuestions - 1) {
         nextButton.textCurrent = 'Finish';
     }
@@ -101,6 +104,8 @@ loadQuestion(currentQuestion);''
 
 // I tried to go off from the "interval assignment," for my timer. 
 // But I could not figure out how to end my game and take the user to be shown their final score.
+// I wanted to display 30 seconds for each quiz question. I could not get it right.
+// So I just totalled up to 210 seconds for the overall trivia game, and just pushed an alert saying "Game Over."
 var timer = 210;
 var intervalId;
 
@@ -117,14 +122,14 @@ function decrement() {
 
     if (timer === 0) {
 
-    stop();
+    stopQuiz();
 
 
-    alert("Time Up!");
+    alert("The Trivia Quiz is Over!");
     }
 }
 
-function stop() {
+function stopQuiz() {
 
     clearInterval(intervalId);
 }
