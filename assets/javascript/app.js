@@ -106,6 +106,7 @@ loadQuestion(currentQuestion);''
 // But I could not figure out how to end my game and take the user to be shown their final score.
 // I wanted to display 30 seconds for each quiz question. I could not get it right.
 // So I just totalled up to 210 seconds for the overall trivia game, and just pushed an alert saying "Game Over."
+// The user can stil take the quiz, even with the timer still running. It just won't stop the game.
 var timer = 210;
 var intervalId;
 
