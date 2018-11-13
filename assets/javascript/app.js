@@ -1,139 +1,187 @@
+
+var card = $("#quiz-area");
+var countStartNumber = 30;
+
 // One object holding in my questions for my trivia game.
 var questions = [{
-    "question": "Which of the following football teams were given the \"America's Team\" nickname?",
-    "choice1": "Houston Texans",
-    "choice2": "Baltimore Ravens",
-    "choice3": "New York Jets",
-    "choice4": "Dallas Cowboys",
-    "answer": "4"
-},  {
-    "question": "Who was the first actor to portray James Bond \"on screen\"?",
-    "choice1": "Daniel Craig",
-    "choice2": "Timothy Dalton",
-    "choice3": "Sean Connery",
-    "choice4": "Barry Nelson",
-    "answer": "4"
-},  {
-    "question": "What was Elvis Presley's natural hair color?",
-    "choice1": "Blonde",
-    "choice2": "Brown",
-    "choice3": "Black",
-    "choice4": "Red",
-    "answer": "1"
-},  {
-    "question": "How many valves does a trumpet have?",
-    "choice1": "3",
-    "choice2": "4",
-    "choice3": "5",
-    "choice4": "2",
-    "answer": "1"
-},  {
-    "question": "Which of the following restaurants do not sell donuts?",
-    "choice1": "Dunkin' Donuts",
-    "choice2": "Shipley Do-Nuts",
-    "choice3": "Krispy Kreme",
-    "choice4": "Kolache Factory",
-    "answer": "4"
-},  {
-    "question": "What year did mankind land on the moon?",
-    "choice1": "1902",
-    "choice2": "1969",
-    "choice3": "1777",
-    "choice4": "2003",
-    "answer": "2"
-},   {
-    "question": "What color is not on the rainbow?",
-    "choice1": "Red",
-    "choice2": "Orange",
-    "choice3": "Yellow",
-    "choice4": "Black",
-    "answer": "4"
-}]
+  question: "Which of the following football teams were given the \"America's Team\" nickname?",
+  answers: ["Houston Texans", "Baltimore Ravens", "New York Jets", "Dallas Cowboys"],
+  correctAnswer: "Dallas Cowboys",
+  gif: ""
+}, {
+  question: "Who was the first actor to portray James Bond \"on screen\"?",
+  answers: ["Daniel Craig", "Timothy Dalton", "Sean Connery", "Barry Nelson"],
+  correctAnswer: "Barry Nelson",
+  gif: ""
+}, {
+  question: "What was Elvis Presley's natural hair color?",
+  answers: ["Blonde", "Brown", "Black", "Red"],
+  correctAnswer: "Blonde",
+  gif: ""
+}, {
+  question: "How many valves does a trumpet have?",
+  answers: ["3", "4", "5", "2"],
+  correctAnswer: "3",
+  gif: ""
+}, {
+  question: "Which of the following restaurants do not sell donuts?",
+  answers: ["Dunkin' Donuts", "Shipley Do-Nuts", "Krispy Kreme", "Kolache Factory"],
+  correctAnswer: "Kolache Factory",
+  gif: ""
+}, {
+  question: "What year did mankind land on the moon?",
+  answers: ["1902", "1969", "1776", "2003"],
+  correctAnswer: "1969",
+  gif: ""
+}, {
+  question: "What color is not on the rainbow?",
+  answers: ["Red", "Orange", "Yellow", "Black"],
+  correctAnswer: "Black",
+  gif: ""
+}, {
+  question: "Which of the following universities are not located in Texas?",
+  answers: ["UofH", "UT Austin", "A&M", "UCLA"],
+  correctAnswer: "UCLA",
+  gif: ""
+}];
+// =========================================================================================================
+// I will come back at a later time to add in some gifs for my questions.
 
-// Variables for questions and score keeping.
-var currentQuestion = 0;
-var score = 0;
-var totalQuestions = questions.length;
+var timer;
 
-// variables will be used to capture HTML IDs.
-var container = document.getElementById('quizContainer');
-var questionEl = document.getElementById('question');
-var choice1 = document.getElementById('choice1');
-var choice2 = document.getElementById('choice2');
-var choice3 = document.getElementById('choice3');
-var choice4 = document.getElementById('choice4');
-var nextButton = document.getElementById('nextButton');
-var resultCont = document.getElementById('result');
+var game = {
 
-function loadQuestion (questionIndex) {
-    var q = questions[questionIndex];
-    questionEl.textContent = (questionIndex + 1) + '. ' + q.question;
-    choice1.textContent = q.choice1;
-    choice2.textContent = q.choice2;
-    choice3.textContent = q.choice3;
-    choice4.textContent = q.choice4;
+  questions: questions,
+  currentQuestion: 0,
+  counter: countStartNumber,
+  correct: 0,
+  incorrect: 0,
+
+  countdown: function() {
+    game.counter--;
+    $("#counter-number").text(game.counter);
+    if (game.counter === 0) {
+      console.log("TIME UP");
+      game.timeUp();
+    }
+  },
+
+  loadQuestion: function() {
+
+    timer = setInterval(game.countdown, 1000);
+
+    card.html("<h2>" + questions[this.currentQuestion].question + "</h2>");
+
+    for (var i = 0; i < questions[this.currentQuestion].answers.length; i++) {
+      card.append("<button class='answer-button' id='button' data-name='" + questions[this.currentQuestion].answers[i]
+      + "'>" + questions[this.currentQuestion].answers[i] + "</button>");
+    }
+  },
+
+  nextQuestion: function() {
+    game.counter = countStartNumber;
+    $("#counter-number").text(game.counter);
+    game.currentQuestion++;
+    game.loadQuestion();
+  },
+
+  timeUp: function() {
+
+    clearInterval(timer);
+
+    $("#counter-number").html(game.counter);
+
+    card.html("<h2>Out of Time!</h2>");
+    card.append("<h3>The Correct Answer was: " + questions[this.currentQuestion].correctAnswer);
+    card.append("<img src='" + questions[this.currentQuestion].gif + "' />");
+
+    if (game.currentQuestion === questions.length - 1) {
+      setTimeout(game.results, 3 * 1000);
+    }
+    else {
+      setTimeout(game.nextQuestion, 3 * 1000);
+    }
+  },
+
+  results: function() {
+
+    clearInterval(timer);
+
+    card.html("<h2>All done, heres how you did!</h2>");
+
+    $("#counter-number").text(game.counter);
+
+    card.append("<h3>Correct Answers: " + game.correct + "</h3>");
+    card.append("<h3>Incorrect Answers: " + game.incorrect + "</h3>");
+    card.append("<h3>Unanswered: " + (questions.length - (game.incorrect + game.correct)) + "</h3>");
+    card.append("<br><button id='start-over'>Start Over?</button>");
+  },
+
+  clicked: function(e) {
+    clearInterval(timer);
+    if ($(e.target).attr("data-name") === questions[this.currentQuestion].correctAnswer) {
+      this.answeredCorrectly();
+    }
+    else {
+      this.answeredIncorrectly();
+    }
+  },
+
+  answeredIncorrectly: function() {
+
+    game.incorrect++;
+
+    clearInterval(timer);
+
+    card.html("<h2>Nope!</h2>");
+    card.append("<h3>The Correct Answer was: " + questions[game.currentQuestion].correctAnswer + "</h3>");
+    card.append("<img src='" + questions[game.currentQuestion].gif + "' />");
+
+    if (game.currentQuestion === questions.length - 1) {
+      setTimeout(game.results, 3 * 1000);
+    }
+    else {
+      setTimeout(game.nextQuestion, 3 * 1000);
+    }
+  },
+
+  answeredCorrectly: function() {
+
+    clearInterval(timer);
+
+    game.correct++;
+
+    card.html("<h2>Correct!</h2>");
+    card.append("<img src='" + questions[game.currentQuestion].gif + "' />");
+
+    if (game.currentQuestion === questions.length - 1) {
+      setTimeout(game.results, 3 * 1000);
+    }
+    else {
+      setTimeout(game.nextQuestion, 3 * 1000);
+    }
+  },
+
+  reset: function() {
+    this.currentQuestion = 0;
+    this.counter = countStartNumber;
+    this.correct = 0;
+    this.incorrect = 0;
+    this.loadQuestion();
+  }
 };
 
-function loadNextQuestion () {
-    var selectedChoice = document.querySelector('input[type=radio]:checked');
-    if(!selectedChoice){
-        alert('please select your answer!');
-        return;
-    }
-    var answer = selectedChoice.value;
-    if(questions[currentQuestion].answer === answer) {
-        // Adds one point if the user gets a question right.
-        score += 1;
-    }
-    selectedChoice.checked = false;
-    currentQuestion++;
-    // Subtracts one point from the final score if the user gets a question wrong.
-    if(currentQuestion === totalQuestions - 1) {
-        nextButton.textCurrent = 'Finish';
-    }
-    if(currentQuestion === totalQuestions) {
-        container.style.display = 'none';
-        resultCont.style.display = '';
-        resultCont.textContent = 'Final Score: ' + score;
-        return;
-    }
-    loadQuestion(currentQuestion);
-}
+// ON CLICK EVENTS FOR THE START OF THE TRIVIA
 
-loadQuestion(currentQuestion);''
+$(document).on("click", "#start-over", function() {
+  game.reset();
+});
 
-// I tried to go off from the "interval assignment," for my timer. 
-// But I could not figure out how to end my game and take the user to be shown their final score.
-// I wanted to display 30 seconds for each quiz question. I could not get it right.
-// So I just totalled up to 210 seconds for the overall trivia game, and just pushed an alert saying "Game Over."
-// The user can stil take the quiz, even with the timer still running. It just won't stop the game.
-var timer = 210;
-var intervalId;
+$(document).on("click", ".answer-button", function(e) {
+  game.clicked(e);
+});
 
-function run() {
-    clearInterval(intervalId);
-    intervalId = setInterval(decrement, 1000);
-}
-
-function decrement() {
-    
-    timer--;
-
-    $("#timeNumber").html("<h2> " + timer + "</h2>");
-
-    if (timer === 0) {
-
-    stopQuiz();
-
-
-    alert("The Trivia Quiz is Over!");
-    }
-}
-
-function stopQuiz() {
-
-    clearInterval(intervalId);
-}
-
-
-run();
+$(document).on("click", "#start", function() {
+  $("#sub-wrapper").prepend("<h2>Time Remaining: <span id='counter-number'>30</span> Seconds</h2>");
+  game.loadQuestion();
+});
